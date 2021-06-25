@@ -1,14 +1,11 @@
 const path = require("path");
 const express = require("express");
 const hbs = require("hbs");
-// const request = require("postman-request");
 const geocode = require("./utils/geocode");
 const forecast = require("./utils/forecast");
 
-// console.log(__dirname);
-// console.log(path.join(__dirname, "../public"));
-
 const app = express();
+const port = process.env.PORT || 3000;
 
 // Define paths for express config
 const publicDirectoryPath = path.join(__dirname, "../public");
@@ -23,7 +20,6 @@ hbs.registerPartials(partialsPath);
 //Setup static directory to serve
 app.use(express.static(publicDirectoryPath));
 
-//
 app.get("", (req, res) => {
   res.render("index", {
     title: "Weather",
@@ -48,26 +44,6 @@ app.get("/help", (req, res) => {
     end: "If there's any problem, I'm willing to help!",
   });
 });
-
-// app.get("", (req, res) => {
-//   res.send("<h1>WEATHER</h1>");
-// });
-
-// app.get("/help", (req, res) => {
-//   res.send([
-//     {
-//       name: "Alex",
-//       age: 25,
-//     },
-//     {
-//       name: "Sarah",
-//     },
-//   ]);
-// });
-
-// app.get("/about", (req, res) => {
-//   res.send("<h1>About Page</h1>");
-// });
 
 app.get("/weather", (req, res) => {
   if (!req.query.address) {
@@ -119,7 +95,6 @@ app.get("/help/*", (req, res) => {
     errorMessage: "Help article not found",
   });
 });
-// * wild card sign that if the request details above not show in the list it will enter here in the wild card * where all request are accept here.
 app.get("*", (req, res) => {
   res.render("page404", {
     title: "404",
@@ -128,10 +103,6 @@ app.get("*", (req, res) => {
   });
 });
 
-//app.com
-//app.com/help
-//app.com/about
-
-app.listen(3000, () => {
-  console.log("Server is up on port 3000.");
+app.listen(port, () => {
+  console.log("Server is up on port" + port);
 });

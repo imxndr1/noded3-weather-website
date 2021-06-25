@@ -1,21 +1,3 @@
-// fetch("http://puzzle.mead.io/puzzle").then((response) => {
-//   response.json().then((data) => {
-//     console.log(data);
-//   });
-// });
-
-fetch("http://localhost:3000/weather?address=!").then((response) => {
-  response.json().then((info) => {
-    if (info.error) {
-      console.log("Unable to find the location. Use another search term");
-    } else {
-      //   console.log(info);
-      console.log(info.location);
-      console.log(info.forecast);
-    }
-  });
-});
-
 const weatherForm = document.querySelector("form");
 const search = document.querySelector("input");
 const messageOne = document.querySelector("#message-1");
@@ -32,7 +14,7 @@ weatherForm.addEventListener("submit", (e) => {
   if (!location) {
     return (messageOne.textContent = "You must provide an address!");
   }
-  const url = "http://localhost:3000/weather?address=" + location;
+  const url = "/weather?address=" + location;
 
   fetch(url).then((response) => {
     response.json().then((info) => {
@@ -40,7 +22,6 @@ weatherForm.addEventListener("submit", (e) => {
         messageOne.textContent =
           "Unable to find the location. Use another search term";
       } else {
-        //   console.log(info);
         messageOne.textContent = info.location;
         messageTwo.textContent = info.forecast;
       }
